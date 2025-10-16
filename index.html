@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MUMU'</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,800&display=swap');
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: #000000;
+      font-family: 'Playfair Display', serif;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #login-box {
+      background: white;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      text-align: center;
+    }
+
+    input[type="password"] {
+      padding: 10px;
+      width: 100%;
+      margin-bottom: 10px;
+      font-family: 'Playfair Display', serif;
+    }
+
+    button {
+      padding: 10px;
+      width: 100%;
+      background-color: #0033cc;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-family: 'Playfair Display', serif;
+    }
+
+    .container {
+      display: none;
+      position: relative;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+    }
+
+    .page-title {
+      position: absolute;
+      top: 8%;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 2.8em;
+      color: white;
+      font-style: italic;
+      z-index: 3;
+      transition: opacity 2s ease;
+    }
+
+    .heart {
+      width: 320px;
+      height: 290px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-45deg);
+      background: radial-gradient(circle at center, crimson 40%, transparent 100%);
+      cursor: pointer;
+      transition: opacity 2s ease, transform 2s ease;
+      z-index: 2;
+      filter: blur(1px);
+    }
+
+    .heart::before,
+    .heart::after {
+      content: "";
+      position: absolute;
+      width: 320px;
+      height: 290px;
+      background: radial-gradient(circle at center, crimson 40%, transparent 100%);
+      border-radius: 50%;
+      filter: blur(1px);
+    }
+
+    .heart::before {
+      top: -160px;
+      left: 0;
+    }
+
+    .heart::after {
+      left: 160px;
+      top: 0;
+    }
+
+    .message {
+      position: absolute;
+      top: 55%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 2em;
+      color: #0033cc;
+      opacity: 0;
+      z-index: 1;
+      transition: opacity 2s ease;
+      animation: fadeInText 3s ease-in-out infinite alternate;
+      font-style: italic;
+      font-weight: 800;
+    }
+
+    .show-message {
+      opacity: 1;
+    }
+
+    .hide-heart {
+      opacity: 0;
+      transform: scale(0.5);
+    }
+
+    @keyframes fadeInText {
+      0% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; }
+      100% { transform: translate(-50%, -50%) scale(1.05); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div id="login-box">
+    <h2>Inserisci la password</h2>
+    <input type="password" id="password" placeholder="Password">
+    <button onclick="checkPassword()">Accedi</button>
+  </div>
+
+  <div class="container" id="mainContent" onclick="toggleHeart()">
+    <div class="page-title" id="pageTitle">Mumù</div>
+    <div class="heart" id="heartElement"></div>
+    <div class="message" id="romanticMessage"> Perchè sei un essere speciale <br> ed io avrò cura di TE </div>
+  </div>
+
+  <script>
+    const correctPassword = "cuore2025"; // Cambia qui la tua password
+
+    function checkPassword() {
+      const input = document.getElementById("password").value;
+      if (input === correctPassword) {
+        document.getElementById("login-box").style.display = "none";
+        document.getElementById("mainContent").style.display = "block";
+      } else {
+        alert("Password errata. Riprova.");
+      }
+    }
+
+    let heartVisible = true;
+
+    function toggleHeart() {
+      const heart = document.getElementById('heartElement');
+      const message = document.getElementById('romanticMessage');
+      const title = document.getElementById('pageTitle');
+
+      if (heartVisible) {
+        heart.classList.add('hide-heart');
+        title.classList.add('fade-title');
+        setTimeout(() => {
+          message.classList.add('show-message');
+        }, 2000);
+      } else {
+        heart.classList.remove('hide-heart');
+        title.classList.remove('fade-title');
+        message.classList.remove('show-message');
+      }
+
+      heartVisible = !heartVisible;
+    }
+  </script>
+</body>
+</html>
